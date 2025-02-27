@@ -1,7 +1,7 @@
 import AuthContent from "../components/auth/AuthContent";
 
 function RegistrationScreen() {
-    function registrationHandler() {
+    function registrationHandler({username, password}) {
         
     }
 

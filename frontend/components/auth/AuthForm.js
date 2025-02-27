@@ -1,10 +1,43 @@
 import { StyleSheet, View } from "react-native";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import { useState } from "react";
 
 function AuthForm({isLogin, onSubmit, credentialsInvalid}) {
-    function submitHandler() {
+    const [enteredUsername, setEnteredUsername] = useState('')
+    const [enteredPassword, setEnteredPassword] = useState('')
+    const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('')
 
+    const {
+        username: usernameInvalid,
+        password: passwordInvalid,
+        confirmPassword: confirmPasswordInvalid,
+    } = credentialsInvalid || {
+        username: false,
+        password: false,
+        confirmPassword: false
+    }
+
+    function updateInputValueHandler(inputType, enteredValue) {
+        switch (inputType) {
+            case 'username':
+                setEnteredUsername(enteredValue)
+                break
+            case 'password':
+                setEnteredPassword(enteredValue)
+                break
+            case 'confirmPassword':
+                setEnteredConfirmPassword(enteredValue)
+                break
+        }
+    }
+
+    function submitHandler() {
+        onSubmit({
+            username: enteredUsername,
+            password: enteredPassword,
+            confirmPassword: enteredConfirmPassword
+        })
     }
 
     return (
@@ -12,23 +45,37 @@ function AuthForm({isLogin, onSubmit, credentialsInvalid}) {
             <Input
                 label="Username"
                 labelStyle={styles.label}
+                invalid={usernameInvalid}
                 textInputProps={{
-                    autoCapitalize: 'none'
+                    autoCapitalize: 'none',
+                    onChangeText: updateInputValueHandler.bind(this, 'username'),
+                    value: enteredUsername,
+                    textContentType: "username"
                 }}
             />
             <Input
                 label="Password"
                 labelStyle={styles.label}
+                invalid={passwordInvalid}
                 textInputProps={{
-                    autoCapitalize: 'none'
+                    autoCapitalize: 'none',
+                    onChangeText: updateInputValueHandler.bind(this, 'password'),
+                    value: enteredPassword,
+                    secureTextEntry: true,
+                    textContentType: "password"
                 }}
             />
             {!isLogin && (
                 <Input
                     label="Confirm Password"
                     labelStyle={styles.label}
+                    invalid={confirmPasswordInvalid}
                     textInputProps={{
-                        autoCapitalize: 'none'
+                        autoCapitalize: 'none',
+                        onChangeText: updateInputValueHandler.bind(this, 'confirmPassword'),
+                        value: enteredConfirmPassword,
+                        secureTextEntry: true,
+                        textContentType: "password"
                     }}
                 />
             )}

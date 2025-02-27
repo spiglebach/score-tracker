@@ -1,10 +1,35 @@
-import { StyleSheet, View } from "react-native"
+import { Alert, StyleSheet, View } from "react-native"
 import AuthForm from "./AuthForm"
 import Button from "../ui/Button"
 import { useNavigation } from "@react-navigation/native"
+import { useState } from "react"
 
 function AuthContent({isLogin, onAuthenticate}) {
     const navigation = useNavigation()
+    const [credentialsInvalid, setCredentialsInvalid] = useState({
+        username: false,
+        password: false,
+        confirmPassword: false
+    })
+
+    function submitHandler(credentials) {
+        let {username, password, confirmPassword} = credentials
+
+        const usernameIsValid = username.length >=3
+        const passwordIsValid = password.length >=3
+        const passwordsAreEqual = isLogin || password === confirmPassword
+
+        setCredentialsInvalid({
+            username: !usernameIsValid,
+            password: !passwordIsValid,
+            confirmPassword: !passwordsAreEqual
+        })
+        if (!usernameIsValid || !passwordIsValid || !passwordsAreEqual) {
+            Alert.alert('Invalid input', 'Please check your entered credentials.')
+            return
+        }
+        onAuthenticate({username, password})
+    }
 
     function switchAuthModeHandler() {
         if (isLogin) {
@@ -16,7 +41,7 @@ function AuthContent({isLogin, onAuthenticate}) {
 
     return (
         <View style={styles.authContainer}>
-            <AuthForm isLogin={isLogin} />
+            <AuthForm isLogin={isLogin} credentialsInvalid={credentialsInvalid} onSubmit={submitHandler} />
             <View style={styles.switchButtonContainer}>
                 <Button
                     onPress={switchAuthModeHandler}

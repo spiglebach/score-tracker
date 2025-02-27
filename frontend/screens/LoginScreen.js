@@ -1,7 +1,7 @@
 import AuthContent from "../components/auth/AuthContent";
 
 function LoginScreen() {
-    function loginHandler() {
+    function loginHandler({username, password}) {
 
     }
 
