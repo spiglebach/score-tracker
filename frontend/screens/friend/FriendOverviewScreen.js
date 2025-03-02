@@ -1,5 +1,5 @@
 import { FRIEND_2, FRIEND_GAME_HISTORY } from "../../data/dummy-data"
-import FriendOverview from "../../components/friend/FriendOverview"
+import FriendOverview from "../../components/friend/overview/FriendOverview"
 import HeaderTitle from "../../components/ui/HeaderTitle"
 import NewGameButton from "../../components/friend/NewGameButton"
 import { useLayoutEffect } from "react"

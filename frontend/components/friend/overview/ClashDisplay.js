@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native"
-import { GameScore } from "../../model/Game"
-import { OWNER } from "../../data/dummy-data"
+import { GameScore } from "../../../model/Game"
+import { OWNER } from "../../../data/dummy-data"
 
 function ClashDisplay({games, friend}) {
     const owner = OWNER

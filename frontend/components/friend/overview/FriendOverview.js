@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native"
 import ClashDisplay from "./ClashDisplay"
 import LastGame from "./LastGame"
 import CountDisplay from "./CountDisplay"
-import { GameScore } from "../../model/Game"
+import { GameScore } from "../../../model/Game"
 
 function FriendOverview({games, friend}) {
     const cooperativeGameCount = games.filter(game => GameScore.COOPERATIVE === game.score).length
