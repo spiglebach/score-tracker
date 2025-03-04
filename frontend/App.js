@@ -8,6 +8,7 @@ import RegistrationScreen from './screens/RegistrationScreen'
 import FriendOverviewScreen from './screens/friend/FriendOverviewScreen'
 import FriendGameHistoryScreen from './screens/friend/FriendGameHistoryScreen'
 import FriendSettingsScreen from './screens/friend/FriendSettingsScreen'
+import { SafeAreaView } from 'react-native'
 
 const Stack = createNativeStackNavigator()
 const BottomTab = createBottomTabNavigator()
@@ -32,9 +33,6 @@ function AuthNavigationStack() {
 function FriendNaviagationStack() {
     return (
         <BottomTab.Navigator screenOptions={{
-            headerStyle: {
-                height: 110
-            },
         }}>
             <BottomTab.Screen name="FriendOverview" component={FriendOverviewScreen} 
                 options={{
@@ -59,9 +57,11 @@ export default function App() {
   return (
     <>
     <StatusBar />
+    <SafeAreaView style={{flex: 1}}>
     <NavigationContainer>
         <FriendNaviagationStack />
     </NavigationContainer>
+    </SafeAreaView>
     </>
   )
 }

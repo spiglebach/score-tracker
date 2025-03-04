@@ -10,7 +10,7 @@ export const OWNER = {
 }
 
 export const FRIEND_1 = new Friendship(1, OWNER, {id: 2, name: "Teszt Elek"}, "Telek", "rgb(193, 106, 228)", "black")
-export const FRIEND_2 = new Friendship(2, OWNER, {id: 3, name: "Prób Alexandra"}, "Palexandra", "rgba(243, 245, 110, 0.77)", "rgb(173, 0, 0)")
+export const FRIEND_2 = new Friendship(2, OWNER, {id: 3, name: "Prób Alexandra"}, "Palexandra", "rgb(243, 245, 110)", "rgb(173, 0, 0)")
 export const FRIEND_3 = new Friendship(3, OWNER, null, "Topi", "rgb(235, 106, 106)", "black")
 export const FRIEND_4 = new Friendship(4, OWNER, {id: 4, name: "Kam Uránusz"}, null, "rgb(106, 235, 196)", "black")
 

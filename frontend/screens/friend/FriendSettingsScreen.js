@@ -1,7 +1,8 @@
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import { FRIEND_2 } from "../../data/dummy-data"
 import HeaderTitle from "../../components/ui/HeaderTitle"
 import { useLayoutEffect } from "react"
+import FriendSettings from "../../components/friend/settings/FriendSettings"
 
 function FriendSettingsScreen({navigation}) {
     const friend = FRIEND_2
@@ -15,7 +16,7 @@ function FriendSettingsScreen({navigation}) {
 
     return (
         <View>
-            <Text>Friend settings</Text>
+            <FriendSettings friend={friend} />
         </View>
     )
 }

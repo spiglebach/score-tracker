@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 
 function Button({children, onPress, mode, style, textStyle}) {
     const outlinedButtonStyles = [mode === 'outlined' && styles.outlinedButton]
@@ -7,22 +7,21 @@ function Button({children, onPress, mode, style, textStyle}) {
     const outlinedTextStyles = [mode === 'outlined' && styles.outlinedButtonText]
     const flatTextStyles = [mode === 'flat' && styles.flatButtonText]
     return (
-        <View style={style}>
-            <Pressable
-                android_ripple={{color: '#ccc'}}
-                style={({pressed}) => [
-                    styles.button,
-                    ...outlinedButtonStyles,
-                    ...flatButtonStyles,
-                    pressed && styles.buttonPressed,
-                    pressed && mode === 'outlined' && styles.outlinedButtonPressed,
-                    pressed && mode === 'flat' && styles.flatButtonPressed
-                ]}
-                onPress={onPress}
-            >
-                <Text style={[styles.buttonText, ...outlinedTextStyles, ...flatTextStyles, textStyle]}>{children}</Text>
-            </Pressable>
-        </View>
+        <Pressable
+            android_ripple={{color: '#ccc'}}
+            style={({pressed}) => [
+                styles.button,
+                ...outlinedButtonStyles,
+                ...flatButtonStyles,
+                pressed && styles.buttonPressed,
+                pressed && mode === 'outlined' && styles.outlinedButtonPressed,
+                pressed && mode === 'flat' && styles.flatButtonPressed,
+                style
+            ]}
+            onPress={onPress}
+        >
+            <Text style={[styles.buttonText, ...outlinedTextStyles, ...flatTextStyles, textStyle]}>{children}</Text>
+        </Pressable>
     )
 }
 
