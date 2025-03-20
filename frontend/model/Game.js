@@ -12,6 +12,7 @@ class Game {
 export const GameScore = Object.freeze({
     WIN_OWNER: Symbol("owner"),
     WIN_FRIEND: Symbol("friend"),
+    DRAW: Symbol("draw"),
     COOPERATIVE: Symbol("cooperative"),
     NOT_APPLICABLE: Symbol("n/a"),
 })

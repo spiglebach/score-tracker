@@ -34,3 +34,59 @@ export const FRIEND_GAME_HISTORY = [
     new Game(10, "Műgyűjtők Társasága", new Date("2025-03-01"), "", FRIEND_2, GameScore.WIN_FRIEND),
     new Game(11, "Vírus", new Date("2025-03-01"), "board game café", FRIEND_2, GameScore.NOT_APPLICABLE),
 ]
+
+export const RECENT_GAMES = [
+    {
+        id: 1,
+        name: 'Kingdomino',
+        timesPlayed: 13
+    },
+    {
+        id: 2,
+        name: 'Scrabble'
+    },
+    {
+        id: 3,
+        name: 'Harmonies'
+    },
+    {
+        id: 4,
+        name: 'Ark Nova'
+    },
+    {
+        id: 5,
+        name: 'CV'
+    },
+]
+
+
+export const MAIN_GAME_RESULT_TYPES = [
+    {
+        title: 'I won',
+        value: GameScore.WIN_OWNER,
+        icon: 'crown'
+    },
+    {
+        title: 'I lost',
+        value: GameScore.WIN_FRIEND,
+        icon: 'face-sad-tear'
+    },
+]
+
+export const SECONDARY_GAME_RESULT_TYPES = [
+    {
+        title: 'Cooperative',
+        value: GameScore.COOPERATIVE,
+        icon: 'handshake'
+    },
+    {
+        title: 'Draw',
+        value: GameScore.DRAW,
+        icon: 'face-meh'
+    },
+    {
+        title: 'N/A',
+        value: GameScore.NOT_APPLICABLE,
+        icon: 'rectangle-xmark'
+    }
+]

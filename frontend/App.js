@@ -9,6 +9,7 @@ import FriendOverviewScreen from './screens/friend/FriendOverviewScreen'
 import FriendGameHistoryScreen from './screens/friend/FriendGameHistoryScreen'
 import FriendSettingsScreen from './screens/friend/FriendSettingsScreen'
 import { SafeAreaView } from 'react-native'
+import NewGameScreen from './screens/game/NewGameScreen'
 
 const Stack = createNativeStackNavigator()
 const BottomTab = createBottomTabNavigator()
@@ -53,13 +54,35 @@ function FriendNaviagationStack() {
     )
 }
 
+function GameNavigationStack() {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerStyle: {
+                backgroundColor: 'plum'
+            },
+            headerTintColor: 'black',
+            contentStyle: {
+                backgroundColor: 'lavender'
+            }
+        }}>
+            <Stack.Screen name="FriendStack" component={FriendNaviagationStack} options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name="NewGame" component={NewGameScreen} options={{
+                title: "New Game",
+                presentation: 'modal'
+            }} />
+        </Stack.Navigator>
+    )
+}
+
 export default function App() {
   return (
     <>
     <StatusBar />
     <SafeAreaView style={{flex: 1}}>
     <NavigationContainer>
-        <FriendNaviagationStack />
+        <GameNavigationStack />
     </NavigationContainer>
     </SafeAreaView>
     </>

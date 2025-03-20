@@ -1,25 +1,25 @@
 import { StyleSheet, Text, TextInput, View } from "react-native"
 
 function Input({label, invalid, changed, style, labelStyle, textInputProps}) {
-    let inputStyles = [styles.input]
+    let textInputStyles = [inputStyles.input]
     if (textInputProps && textInputProps.multiline) {
-        inputStyles.push(styles.inputMultiline)
+        textInputStyles.push(inputStyles.inputMultiline)
     }
     if (changed && !invalid) {
-        inputStyles.push(styles.changedInput)
+        textInputStyles.push(inputStyles.changedInput)
     }
     if (invalid) {
-        inputStyles.push(styles.invalidInput)
+        textInputStyles.push(inputStyles.invalidInput)
     }
     return (
-        <View style={[styles.container, style]}>
-            <Text style={[styles.label, changed && !invalid && styles.changedLabel, invalid && styles.invalidLabel, labelStyle]}>{label}</Text>
-            <TextInput style={inputStyles} {...textInputProps} />
+        <View style={[inputStyles.container, style]}>
+            <Text style={[inputStyles.label, changed && !invalid && inputStyles.changedLabel, invalid && inputStyles.invalidLabel, labelStyle]}>{label}</Text>
+            <TextInput style={textInputStyles} {...textInputProps} />
         </View>
     )
 }
 
-const styles = StyleSheet.create({
+export const inputStyles = StyleSheet.create({
     container: {
         marginHorizontal: 4,
         marginVertical: 8
