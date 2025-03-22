@@ -29,7 +29,10 @@ public class WebSecurityConfiguration {
                         "/actuator/**",
                         "/auth/authenticate",
                         "/auth/register",
-                        "/auth/refresh").permitAll()
+                        "/auth/refresh",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v3/**").permitAll()
                 .anyRequest().authenticated()
         );
         http.csrf(AbstractHttpConfigurer::disable);
