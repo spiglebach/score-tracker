@@ -1,5 +1,6 @@
 package hu.spiglebach.scoretracker.repository;
 
+import hu.spiglebach.scoretracker.model.entity.friend.Friend;
 import hu.spiglebach.scoretracker.model.entity.match.Match;
 import hu.spiglebach.scoretracker.model.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,6 @@ import java.util.List;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
 
-    @Query("select m from Match m where m.createdBy = :owner")
-    List<Match> findMatchesByOwner(@Param("owner") User owner);
+    @Query("select m from Match m where m.owner = :owner and m.friend = :friend")
+    List<Match> findMatchesByOwnerAndFriend(@Param("owner") User owner, @Param("friend") Friend friend);
 }

@@ -3,6 +3,7 @@ package hu.spiglebach.scoretracker.controller;
 import hu.spiglebach.scoretracker.model.entity.user.User;
 import hu.spiglebach.scoretracker.model.payload.friend.AddFriendRequest;
 import hu.spiglebach.scoretracker.model.payload.friend.FriendResponse;
+import hu.spiglebach.scoretracker.model.payload.friend.UpdateFriendRequest;
 import hu.spiglebach.scoretracker.service.friend.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,12 @@ public class FriendController {
     @PostMapping
     public ResponseEntity<FriendResponse> addFriend(@RequestBody AddFriendRequest request, @AuthenticationPrincipal User owner) {
         var response = friendService.addFriendMapped(request, owner);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{friend-id}")
+    public ResponseEntity<FriendResponse> updateFriend(@PathVariable("friend-id") Long friendId, @RequestBody UpdateFriendRequest request, @AuthenticationPrincipal User owner) {
+        var response = friendService.updateFriendMapped(friendId, request, owner);
         return ResponseEntity.ok(response);
     }
 }

@@ -30,11 +30,11 @@ public class TestBootstrapper {
 
         var friend1 = friendService.addFriend(new AddFriendRequest("My Bestie", "#000000", "#7DFF7B", "thefriend"), user1);
 
-        var match1 = matchRepository.save(new Match("Kingdomino", MatchResult.OWNER_LOST, LocalDate.of(2025, 1, 10)));
-        var match2 = matchRepository.save(new Match("Scrabble", MatchResult.OWNER_LOST, LocalDate.of(2025, 1, 14)));
-        var match3 = matchRepository.save(new Match("Jaipur", MatchResult.OWNER_WON, LocalDate.of(2025, 2, 5)));
-        var match4 = matchRepository.save(new Match("Pandemic", MatchResult.COOPERATIVE, LocalDate.of(2025, 2, 5)));
-        var match5 = matchRepository.save(new Match("Virus", MatchResult.NOT_APPLICABLE, LocalDate.of(2025, 2, 7)));
+        var match1 = matchRepository.save(new Match("Kingdomino", MatchResult.OWNER_LOST, LocalDate.of(2025, 1, 10), user1, friend1));
+        var match2 = matchRepository.save(new Match("Scrabble", MatchResult.OWNER_LOST, LocalDate.of(2025, 1, 14), user1, friend1));
+        var match3 = matchRepository.save(new Match("Jaipur", MatchResult.OWNER_WON, LocalDate.of(2025, 2, 5), user1, friend1));
+        var match4 = matchRepository.save(new Match("Pandemic", MatchResult.COOPERATIVE, LocalDate.of(2025, 2, 5), user1, friend1));
+        var match5 = matchRepository.save(new Match("Virus", MatchResult.NOT_APPLICABLE, LocalDate.of(2025, 2, 7), user1, friend1));
         return "test data loaded";
     }
 }

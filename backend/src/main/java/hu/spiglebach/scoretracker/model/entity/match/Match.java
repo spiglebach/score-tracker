@@ -1,6 +1,8 @@
 package hu.spiglebach.scoretracker.model.entity.match;
 
 import hu.spiglebach.scoretracker.model.entity.AuditableEntity;
+import hu.spiglebach.scoretracker.model.entity.friend.Friend;
+import hu.spiglebach.scoretracker.model.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +27,19 @@ public class Match extends AuditableEntity {
     @Column(name = "date")
     private LocalDate date;
 
-    public Match(String gameName, MatchResult matchResult, LocalDate date) {
+    @JoinColumn(name = "owner_user_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private User owner;
+
+    @JoinColumn(name = "friend_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Friend friend;
+
+    public Match(String gameName, MatchResult matchResult, LocalDate date, User owner, Friend friend) {
         this.gameName = gameName;
         this.matchResult = matchResult;
         this.date = date;
+        this.owner = owner;
+        this.friend = friend;
     }
 }

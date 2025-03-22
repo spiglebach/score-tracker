@@ -5,6 +5,7 @@ import hu.spiglebach.scoretracker.model.entity.user.User;
 import hu.spiglebach.scoretracker.model.payload.match.CreateMatchRequest;
 import hu.spiglebach.scoretracker.model.payload.match.MatchResponse;
 import hu.spiglebach.scoretracker.repository.MatchRepository;
+import hu.spiglebach.scoretracker.service.fetch.FriendFetcher;
 import hu.spiglebach.scoretracker.service.fetch.MatchFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,22 +16,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MatchService {
     private final MatchFetcher matchFetcher;
+    private final FriendFetcher friendFetcher;
     private final MatchRepository matchRepository;
 
-    public List<MatchResponse> findMatchesByOwnerMapped(User owner) {
-        return matchFetcher.findMatchesByOwner(owner)
+    public List<MatchResponse> findMatchesByFriendIdAndOwnerMapped(Long friendId, User owner) {
+        var friend = friendFetcher.findFriendByIdAndOwner(friendId, owner);
+        return matchFetcher.findMatchesByOwnerAndFriend(owner, friend)
                 .stream()
                 .map(this::mapToMatchResponse)
                 .toList();
     }
 
-    public MatchResponse createMatchMapped(CreateMatchRequest matchData) {
-        var createdMatch = createMatch(matchData);
+    public MatchResponse createMatchMapped(Long friendId, CreateMatchRequest matchData, User owner) {
+        var createdMatch = createMatch(friendId, matchData, owner);
         return mapToMatchResponse(createdMatch);
     }
 
-    private Match createMatch(CreateMatchRequest matchData) {
-        var match = new Match(matchData.gameName(), matchData.matchResult(), matchData.date());
+    private Match createMatch(Long friendId, CreateMatchRequest matchData, User owner) {
+        var friend = friendFetcher.findFriendByIdAndOwner(friendId, owner);
+        var match = new Match(matchData.gameName(), matchData.matchResult(), matchData.date(), owner, friend);
         return matchRepository.save(match);
     }
 

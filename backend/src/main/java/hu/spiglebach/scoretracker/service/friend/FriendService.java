@@ -4,6 +4,7 @@ import hu.spiglebach.scoretracker.model.entity.friend.Friend;
 import hu.spiglebach.scoretracker.model.entity.user.User;
 import hu.spiglebach.scoretracker.model.payload.friend.AddFriendRequest;
 import hu.spiglebach.scoretracker.model.payload.friend.FriendResponse;
+import hu.spiglebach.scoretracker.model.payload.friend.UpdateFriendRequest;
 import hu.spiglebach.scoretracker.model.payload.user.UserResponse;
 import hu.spiglebach.scoretracker.repository.FriendRepository;
 import hu.spiglebach.scoretracker.service.fetch.FriendFetcher;
@@ -55,6 +56,20 @@ public class FriendService {
                 .flatMap(userFetcher::findUserByUsername)
                 .orElse(null);
         var friend = new Friend(owner, request.friendNickname(), request.friendBackgroundColor(), request.friendTextColor(), friendUser);
+        friend = friendRepository.save(friend);
+        return friend;
+    }
+
+    public FriendResponse updateFriendMapped(Long friendId, UpdateFriendRequest request, User owner) {
+        var updatedFriend = updateFriend(friendId, request, owner);
+        return mapToFriendResponse(updatedFriend);
+    }
+
+    private Friend updateFriend(Long friendId, UpdateFriendRequest request, User owner) {
+        var friend = friendFetcher.findFriendByIdAndOwner(friendId, owner);
+        friend.setFriendNickname(request.friendNickname());
+        friend.setFriendBackgroundColor(request.friendBackgroundColor());
+        friend.setFriendTextColor(request.friendTextColor());
         friend = friendRepository.save(friend);
         return friend;
     }
