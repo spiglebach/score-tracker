@@ -11,10 +11,12 @@ import hu.spiglebach.scoretracker.service.fetch.FriendFetcher;
 import hu.spiglebach.scoretracker.service.fetch.UserFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class FriendService {
@@ -23,6 +25,7 @@ public class FriendService {
     private final UserFetcher userFetcher;
     private final Mapper mapper;
 
+    @Transactional(readOnly = true)
     public List<FriendResponse> getFriendsMapped(User owner) {
         return friendFetcher.findFriendsByOwner(owner)
                 .stream()

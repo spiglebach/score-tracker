@@ -6,9 +6,11 @@ import hu.spiglebach.scoretracker.model.entity.user.User;
 import hu.spiglebach.scoretracker.repository.FriendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class FriendFetcher {

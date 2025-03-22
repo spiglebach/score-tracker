@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +22,7 @@ public class AuthController {
     private final UserService userService;
     private final JwtService jwtService;
 
+    @Transactional
     @PostMapping("/authenticate")
     public ResponseEntity<JwtResponse> authenticate(@RequestBody AuthenticationRequest authRequest) {
         var request = UsernamePasswordAuthenticationToken.unauthenticated(
@@ -33,6 +35,7 @@ public class AuthController {
         return ResponseEntity.ok(jwtResponse);
     }
 
+    @Transactional
     @PostMapping("/register")
     public ResponseEntity<JwtResponse> register(@RequestBody UserRegistrationRequest registrationRequest) {
         var registeredUser = userService.registerUser(registrationRequest);

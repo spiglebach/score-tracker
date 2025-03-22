@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @Transactional
     public void saveRefreshTokenForUser(String refreshToken, User user) {
         var oldRefreshToken = refreshTokenRepository.findByOwner(user);
         RefreshToken newRefreshToken;
@@ -26,6 +26,7 @@ public class RefreshTokenService {
         refreshTokenRepository.save(newRefreshToken);
     }
 
+    @Transactional(readOnly = true)
     public RefreshToken validateAndGetRefreshToken(String refreshToken, String subjectUsername) {
         var storedRefreshToken = refreshTokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(ApiErrorCode.JWT_INVALID::exception);

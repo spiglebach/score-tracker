@@ -10,9 +10,11 @@ import hu.spiglebach.scoretracker.service.fetch.FriendFetcher;
 import hu.spiglebach.scoretracker.service.fetch.MatchFetcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class MatchService {
@@ -21,6 +23,7 @@ public class MatchService {
     private final MatchRepository matchRepository;
     private final Mapper mapper;
 
+    @Transactional(readOnly = true)
     public List<MatchResponse> findMatchesByFriendIdAndOwnerMapped(Long friendId, User owner) {
         var friend = friendFetcher.findFriendByIdAndOwner(friendId, owner);
         return matchFetcher.findMatchesByOwnerAndFriend(owner, friend)
