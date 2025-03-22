@@ -14,10 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Friend extends AuditableEntity {
 
-    @JoinColumn(name = "owner_user_id")
-    @ManyToOne(optional = false)
-    private User owner;
-
     @Column(name = "friend_nickname")
     private String friendNickname;
 
@@ -27,15 +23,19 @@ public class Friend extends AuditableEntity {
     @Column(name = "friend_text_color")
     private String friendTextColor;
 
+    @JoinColumn(name = "owner_user_id")
+    @ManyToOne(optional = false)
+    private User owner;
+
     @JoinColumn(name = "friend_user_id")
     @ManyToOne(optional = true)
     private User friend;
 
-    public Friend(User owner, String friendNickname, String friendBackgroundColor, String friendTextColor, User friend) {
-        this.owner = owner;
+    public Friend(String friendNickname, String friendBackgroundColor, String friendTextColor, User owner, User friend) {
         this.friendNickname = friendNickname;
         this.friendBackgroundColor = friendBackgroundColor;
         this.friendTextColor = friendTextColor;
+        this.owner = owner;
         this.friend = friend;
     }
 }

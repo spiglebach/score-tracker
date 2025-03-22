@@ -2,10 +2,10 @@ package hu.spiglebach.scoretracker.service.friend;
 
 import hu.spiglebach.scoretracker.model.entity.friend.Friend;
 import hu.spiglebach.scoretracker.model.entity.user.User;
+import hu.spiglebach.scoretracker.model.mapper.Mapper;
 import hu.spiglebach.scoretracker.model.payload.friend.AddFriendRequest;
 import hu.spiglebach.scoretracker.model.payload.friend.FriendResponse;
 import hu.spiglebach.scoretracker.model.payload.friend.UpdateFriendRequest;
-import hu.spiglebach.scoretracker.model.payload.user.UserResponse;
 import hu.spiglebach.scoretracker.repository.FriendRepository;
 import hu.spiglebach.scoretracker.service.fetch.FriendFetcher;
 import hu.spiglebach.scoretracker.service.fetch.UserFetcher;
@@ -21,55 +21,37 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final FriendFetcher friendFetcher;
     private final UserFetcher userFetcher;
+    private final Mapper mapper;
 
     public List<FriendResponse> getFriendsMapped(User owner) {
         return friendFetcher.findFriendsByOwner(owner)
                 .stream()
-                .map(this::mapToFriendResponse)
+                .map(mapper::toResponse)
                 .toList();
-    }
-
-    private FriendResponse mapToFriendResponse(Friend friend) {
-        return new FriendResponse(
-                friend.getId(),
-                friend.getFriendNickname(),
-                friend.getFriendBackgroundColor(),
-                friend.getFriendTextColor(),
-                mapToUserResponse(friend.getFriend())
-        );
-    }
-
-    private UserResponse mapToUserResponse(User user) {
-        if (user == null) {
-            return null;
-        }
-        return new UserResponse(user.getId(), user.getUsername());
     }
 
     public FriendResponse addFriendMapped(AddFriendRequest request, User owner) {
         var newFriend = addFriend(request, owner);
-        return mapToFriendResponse(newFriend);
+        return mapper.toResponse(newFriend);
     }
 
     public Friend addFriend(AddFriendRequest request, User owner) {
         var friendUser = Optional.ofNullable(request.friendUsername())
                 .flatMap(userFetcher::findUserByUsername)
                 .orElse(null);
-        var friend = new Friend(owner, request.friendNickname(), request.friendBackgroundColor(), request.friendTextColor(), friendUser);
+        var friend = mapper.toEntity(request, owner, friendUser);
         friend = friendRepository.save(friend);
         return friend;
     }
 
     public FriendResponse updateFriendMapped(Long friendId, UpdateFriendRequest request, User owner) {
         var updatedFriend = updateFriend(friendId, request, owner);
-        return mapToFriendResponse(updatedFriend);
+        return mapper.toResponse(updatedFriend);
     }
 
     private Friend updateFriend(Long friendId, UpdateFriendRequest request, User owner) {
         var friend = friendFetcher.findFriendByIdAndOwner(friendId, owner);
-        friend.setFriendNickname(request.friendNickname());
-        friend.setFriendBackgroundColor(request.friendBackgroundColor());
-        friend.setFriendTextColor(request.friendTextColor());
+        mapper.updateFriend(request, friend);
         friend = friendRepository.save(friend);
         return friend;
     }
