@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {jwtDecode} from "jwt-decode"
 import { isAfter } from "date-fns";
@@ -118,7 +118,7 @@ function AuthContextProvider({children}) {
 export function AxiosAuthRefreshInterceptor({children}) {
     const {isAuthenticated, authToken, refresh, isJwtExpired} = useContext(AuthContext)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const requestInterceptor = (config) => {
             if (isAuthenticated && isJwtExpired(authToken)) {
                 refresh()
