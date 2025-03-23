@@ -3,13 +3,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { FontAwesome6, Octicons } from '@expo/vector-icons'
-import LoginScreen from './screens/LoginScreen'
-import RegistrationScreen from './screens/RegistrationScreen'
+import LoginScreen from './screens/auth/LoginScreen'
+import RegistrationScreen from './screens/auth/RegistrationScreen'
 import FriendOverviewScreen from './screens/friend/FriendOverviewScreen'
 import FriendGameHistoryScreen from './screens/friend/FriendGameHistoryScreen'
 import FriendSettingsScreen from './screens/friend/FriendSettingsScreen'
 import { SafeAreaView } from 'react-native'
 import NewGameScreen from './screens/game/NewGameScreen'
+import AuthContextProvider, { AuthContext, AxiosAuthRefreshInterceptor, getTokensFromStorage } from './store/context/auth/auth-context'
+import { useContext, useEffect, useState } from 'react'
+import LoadingOverlay from './components/ui/LoadingOverlay'
 
 const Stack = createNativeStackNavigator()
 const BottomTab = createBottomTabNavigator()
@@ -76,14 +79,52 @@ function GameNavigationStack() {
     )
 }
 
+function Navigation() {
+    const {isAuthenticated} = useContext(AuthContext)
+    let activeNavigationStack
+    if (isAuthenticated) {
+        activeNavigationStack = <GameNavigationStack />
+    } else {
+        activeNavigationStack = <AuthNavigationStack />
+    }
+
+    return (
+        <NavigationContainer>
+            {activeNavigationStack}
+        </NavigationContainer>
+    )
+}
+
+function Root() {
+    const [isTryingToLogin, setIsTryingToLogin] = useState(true)
+    const {authenticate} = useContext(AuthContext)
+    useEffect(() => {
+        async function fetchTokens() {
+            const tokens = await getTokensFromStorage()
+            if (tokens) {
+                authenticate(tokens)
+            }
+            setIsTryingToLogin(false)
+        } 
+        fetchTokens()
+    }, [])
+
+    if (isTryingToLogin) {
+        return <LoadingOverlay />
+    }
+    return <Navigation />
+}
+
 export default function App() {
   return (
     <>
     <StatusBar />
     <SafeAreaView style={{flex: 1}}>
-    <NavigationContainer>
-        <GameNavigationStack />
-    </NavigationContainer>
+    <AuthContextProvider>
+        <AxiosAuthRefreshInterceptor>
+            <Root />
+        </AxiosAuthRefreshInterceptor>
+    </AuthContextProvider>
     </SafeAreaView>
     </>
   )
