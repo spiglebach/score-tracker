@@ -1,6 +1,6 @@
 package hu.spiglebach.scoretracker.model.entity.user;
 
-import hu.spiglebach.scoretracker.model.entity.AuditableEntity;
+import hu.spiglebach.scoretracker.model.entity.common.AuditableWithId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-public class User extends AuditableEntity {
+public class User extends AuditableWithId {
 
     @Column(name = "username")
     private String username;

@@ -1,4 +1,4 @@
-package hu.spiglebach.scoretracker.model.entity;
+package hu.spiglebach.scoretracker.model.entity.common;
 
 import hu.spiglebach.scoretracker.model.entity.user.User;
 import jakarta.persistence.*;
@@ -16,12 +16,7 @@ import java.util.Date;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AuditableEntity {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+public class Auditable {
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)

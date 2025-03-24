@@ -1,6 +1,6 @@
 package hu.spiglebach.scoretracker.model.entity.match;
 
-import hu.spiglebach.scoretracker.model.entity.AuditableEntity;
+import hu.spiglebach.scoretracker.model.entity.common.AuditableWithId;
 import hu.spiglebach.scoretracker.model.entity.friend.Friend;
 import hu.spiglebach.scoretracker.model.entity.user.User;
 import jakarta.persistence.*;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "match")
 @NoArgsConstructor
-public class Match extends AuditableEntity {
+public class Match extends AuditableWithId {
 
     @Column(name = "game_name")
     private String gameName;

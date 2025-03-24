@@ -1,6 +1,7 @@
 package hu.spiglebach.scoretracker.model.entity.friend;
 
-import hu.spiglebach.scoretracker.model.entity.AuditableEntity;
+import hu.spiglebach.scoretracker.model.entity.common.AuditableWithId;
+import hu.spiglebach.scoretracker.model.entity.player.PlayerSettings;
 import hu.spiglebach.scoretracker.model.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,16 +13,15 @@ import lombok.Setter;
 @Entity
 @Table(name = "friend")
 @NoArgsConstructor
-public class Friend extends AuditableEntity {
+public class Friend extends AuditableWithId {
 
-    @Column(name = "friend_nickname")
-    private String friendNickname;
-
-    @Column(name = "friend_background_color")
-    private String friendBackgroundColor;
-
-    @Column(name = "friend_text_color")
-    private String friendTextColor;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "nickname", column = @Column(name = "friend_nickname")),
+            @AttributeOverride(name = "backgroundColor", column = @Column(name = "friend_background_color")),
+            @AttributeOverride(name = "textColor", column = @Column(name = "friend_text_color")),
+    })
+    private PlayerSettings playerSettings;
 
     @JoinColumn(name = "owner_user_id")
     @ManyToOne(optional = false)
@@ -32,9 +32,7 @@ public class Friend extends AuditableEntity {
     private User friend;
 
     public Friend(String friendNickname, String friendBackgroundColor, String friendTextColor, User owner, User friend) {
-        this.friendNickname = friendNickname;
-        this.friendBackgroundColor = friendBackgroundColor;
-        this.friendTextColor = friendTextColor;
+        this.playerSettings = new PlayerSettings(friendNickname, friendBackgroundColor, friendTextColor);
         this.owner = owner;
         this.friend = friend;
     }
