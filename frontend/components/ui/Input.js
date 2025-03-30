@@ -1,19 +1,65 @@
 import { StyleSheet, Text, TextInput, View } from "react-native"
+import { GlobalStyles } from "../../constants/styles"
+
+export function determineInputLabelColor(changed, invalid) {
+    if (invalid) {
+        return GlobalStyles.colors.error
+    }
+    if (changed) {
+        return GlobalStyles.colors.warnTextOnSurface
+    }
+    return GlobalStyles.colors.surfaceText500
+}
+
+export function determineInputBoxColor(changed, invalid) {
+    if (invalid) {
+        return GlobalStyles.colors.errorContainer
+    }
+    if (changed) {
+        return GlobalStyles.colors.warnContainer
+    }
+    return GlobalStyles.colors.tertiaryContainer
+}
+
+export function determineInputBoxBorderColor(changed, invalid) {
+    if (invalid) {
+        return GlobalStyles.colors.error
+    }
+    if (changed) {
+        return GlobalStyles.colors.warn
+    }
+    return GlobalStyles.colors.surfaceText500
+}
+
+export function determineInputTextColor(changed, invalid) {
+    if (invalid) {
+        return GlobalStyles.colors.errorContainerText
+    }
+    if (changed) {
+        return GlobalStyles.colors.warnContainerText
+    }
+    return GlobalStyles.colors.tertiaryContainerText
+}
 
 function Input({label, invalid, changed, style, labelStyle, textInputProps}) {
     let textInputStyles = [inputStyles.input]
     if (textInputProps && textInputProps.multiline) {
         textInputStyles.push(inputStyles.inputMultiline)
     }
-    if (changed && !invalid) {
-        textInputStyles.push(inputStyles.changedInput)
+
+    const inputColors = {
+        backgroundColor: determineInputBoxColor(changed, invalid),
+        color: determineInputTextColor(changed, invalid),
+        borderColor: determineInputBoxBorderColor(changed, invalid)
     }
-    if (invalid) {
-        textInputStyles.push(inputStyles.invalidInput)
+    textInputStyles.push(inputColors)
+
+    const labelColorStyle = {
+        color: determineInputLabelColor(changed, invalid)
     }
     return (
         <View style={[inputStyles.container, style]}>
-            <Text style={[inputStyles.label, changed && !invalid && inputStyles.changedLabel, invalid && inputStyles.invalidLabel, labelStyle]}>{label}</Text>
+            <Text style={[inputStyles.label, labelColorStyle, labelStyle]}>{label}</Text>
             <TextInput style={textInputStyles} {...textInputProps} />
         </View>
     )
@@ -29,33 +75,17 @@ export const inputStyles = StyleSheet.create({
         marginBottom: 4
     },
     input: {
-        backgroundColor: 'seashell',
+        backgroundColor: GlobalStyles.colors.tertiaryContainer,
+        color: GlobalStyles.colors.tertiaryContainerText,
         padding: 6,
         borderRadius: 8,
         fontSize: 18,
-        borderWidth: 1,
-        borderColor: 'transparent'
+        borderWidth: 1
     },
     inputMultiline: {
         minHeight: 60,
         textAlignVertical: 'top'
     },
-    changedInput: {
-        backgroundColor: 'lemonchiffon',
-        borderWidth: 1,
-        borderColor: 'darkorange'
-    },
-    invalidInput: {
-        backgroundColor: 'lightpink',
-        borderWidth: 1,
-        borderColor: 'firebrick'
-    },
-    changedLabel: {
-        color: 'darkorange'
-    },
-    invalidLabel: {
-        color: 'firebrick'
-    }
 })
 
 export default Input

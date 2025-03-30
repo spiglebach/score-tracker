@@ -1,4 +1,3 @@
-import { View } from "react-native"
 import { FRIEND_2 } from "../../data/dummy-data"
 import HeaderTitle from "../../components/ui/HeaderTitle"
 import { useLayoutEffect } from "react"
@@ -9,15 +8,13 @@ function FriendSettingsScreen({navigation}) {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: (props) => <HeaderTitle style={props.headerStyle} title={friend.friendNickname} subtitle="Friend Settings" />
+            headerTitle: (props) => <HeaderTitle {...props} title={friend.friendNickname} subtitle="Friend Settings" />
         })
     }, [])
 
 
     return (
-        <View>
-            <FriendSettings friend={friend} />
-        </View>
+        <FriendSettings friend={friend} />
     )
 }
 

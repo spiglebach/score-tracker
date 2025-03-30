@@ -13,20 +13,25 @@ import NewGameScreen from './screens/game/NewGameScreen'
 import AuthContextProvider, { AuthContext, AxiosAuthRefreshInterceptor, getTokensFromStorage } from './store/context/auth/auth-context'
 import { useContext, useEffect, useState } from 'react'
 import LoadingOverlay from './components/ui/LoadingOverlay'
+import { GlobalStyles } from './constants/styles'
 
 const Stack = createNativeStackNavigator()
 const BottomTab = createBottomTabNavigator()
 
+const GLOBAL_HEADER_STYLE = {
+    backgroundColor: GlobalStyles.colors.primary
+}
+const GLOBAL_HEADER_TINT_COLOR = GlobalStyles.colors.primaryText
+const GLOBAL_CONTENT_STYLE = {
+    backgroundColor: GlobalStyles.colors.surface300
+}
+
 function AuthNavigationStack() {
     return (
         <Stack.Navigator screenOptions={{
-            headerStyle: {
-                backgroundColor: 'plum'
-            },
-            headerTintColor: 'black',
-            contentStyle: {
-                backgroundColor: 'lavender'
-            }
+            headerStyle: {...GLOBAL_HEADER_STYLE},
+            headerTintColor: GLOBAL_HEADER_TINT_COLOR,
+            contentStyle: {...GLOBAL_CONTENT_STYLE}
         }}>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
@@ -37,6 +42,13 @@ function AuthNavigationStack() {
 function FriendNaviagationStack() {
     return (
         <BottomTab.Navigator screenOptions={{
+            headerStyle: {...GLOBAL_HEADER_STYLE},
+            headerTintColor: GLOBAL_HEADER_TINT_COLOR,
+            sceneStyle: {...GLOBAL_CONTENT_STYLE},
+            tabBarActiveTintColor: GlobalStyles.colors.primaryText,
+            tabBarActiveBackgroundColor: GlobalStyles.colors.primary,
+            tabBarInactiveBackgroundColor: GlobalStyles.colors.primaryContainer,
+            tabBarInactiveTintColor: GlobalStyles.colors.primaryContainerText,
         }}>
             <BottomTab.Screen name="FriendOverview" component={FriendOverviewScreen} 
                 options={{
@@ -60,13 +72,9 @@ function FriendNaviagationStack() {
 function GameNavigationStack() {
     return (
         <Stack.Navigator screenOptions={{
-            headerStyle: {
-                backgroundColor: 'plum'
-            },
-            headerTintColor: 'black',
-            contentStyle: {
-                backgroundColor: 'lavender'
-            }
+            headerStyle: {...GLOBAL_HEADER_STYLE},
+            headerTintColor: GLOBAL_HEADER_TINT_COLOR,
+            contentStyle: {...GLOBAL_CONTENT_STYLE}
         }}>
             <Stack.Screen name="FriendStack" component={FriendNaviagationStack} options={{
                 headerShown: false
@@ -118,8 +126,8 @@ function Root() {
 export default function App() {
   return (
     <>
-    <StatusBar />
-    <SafeAreaView style={{flex: 1}}>
+    <StatusBar style='light'/>
+    <SafeAreaView  style={{flex: 1, backgroundColor: GlobalStyles.colors.primaryDark}}>
     <AuthContextProvider>
         <AxiosAuthRefreshInterceptor>
             <Root />

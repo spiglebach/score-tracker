@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { inputStyles } from "./Input";
 import Button from "./Button";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { GlobalStyles } from "../../constants/styles";
 
 function DatePicker({value, onChange, buttons}) {
     const defaultStyles = getDefaultStyles()
@@ -59,7 +60,7 @@ function DatePicker({value, onChange, buttons}) {
                 <View style={styles.dateDisplayContainer}>
                     <Pressable style={[inputStyles.input, styles.dateDisplay]} onPress={handleToggleCalendar}>
                         <Text style={styles.dateDisplayText}>{formattedDate}</Text>
-                        <FontAwesome6 name="calendar" size={18} />
+                        <FontAwesome6 name="calendar" size={18} color={GlobalStyles.colors.tertiaryContainerText} />
                     </Pressable>
                     {!!buttons && <View style={styles.dateButtonContainer}>
                         {buttons}
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: GlobalStyles.colors.surface500
     },
     calendarContainer: {
         height: 370,
@@ -87,12 +89,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 8,
         marginHorizontal: 4,
-        backgroundColor: 'rgb(187, 185, 185)',
+        backgroundColor: GlobalStyles.colors.outline,
         padding: 8,
     },
     dateTimePicker: {
         borderRadius: 14,
-        backgroundColor: 'rgb(245, 245, 245)'
+        backgroundColor: GlobalStyles.colors.surface600,
     },
     dateDisplayContainer: {
         flexDirection: 'row',
@@ -119,12 +121,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     calendarToday: {
-        backgroundColor: 'rgb(255, 254, 209)'
+        backgroundColor: GlobalStyles.colors.tertiaryContainer
     },
     calendarSelected: {
-        backgroundColor: 'rgb(88, 0, 0)',
+        backgroundColor: GlobalStyles.colors.tertiary,
         borderWidth: 2,
-        borderColor: 'rgb(231, 0, 0)'
+        borderColor: GlobalStyles.colors.outline
     }
 })
 

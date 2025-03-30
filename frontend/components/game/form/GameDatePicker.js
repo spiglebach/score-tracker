@@ -17,19 +17,13 @@ function GameDatePicker({value, setValue, onChange}) {
     }
 
     const dateUtilButtons = <>
-        <Button onPress={handleDateButtonPressed.bind(this, "yesterday")} style={styles.button}>Yesterday</Button>
-        <Button onPress={handleDateButtonPressed.bind(this, "today")} style={styles.button}>Today</Button>
+        <Button color="tertiary" onPress={handleDateButtonPressed.bind(this, "yesterday")}>Yesterday</Button>
+        <Button color="tertiary" onPress={handleDateButtonPressed.bind(this, "today")}>Today</Button>
     </>
 
     return (
         <DatePicker value={value} onChange={onChange} buttons={dateUtilButtons} />
     )
 }
-
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: 'rgb(76, 27, 190)'
-    }
-})
 
 export default GameDatePicker

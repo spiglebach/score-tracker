@@ -1,5 +1,6 @@
 import { StyleSheet, Text } from "react-native"
 import Button from "../../ui/Button"
+import { GlobalStyles } from "../../../constants/styles"
 
 function RecentGameButton({name, onPress, timesPlayed}) {
     return (
@@ -13,13 +14,14 @@ function RecentGameButton({name, onPress, timesPlayed}) {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: 'rgb(108, 26, 116)'
+        backgroundColor: GlobalStyles.colors.tertiary
     },
     name: {
-        fontSize: 14
+        fontSize: 14,
+        color: GlobalStyles.colors.tertiaryText
     },
     timesPlayed: {
-        color: 'rgb(172, 172, 172)',
+        color: GlobalStyles.colors.tertiaryText300,
         fontSize: 12
     }
 })

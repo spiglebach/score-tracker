@@ -10,7 +10,7 @@ function FriendOverviewScreen({navigation}) {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: (props) => <HeaderTitle style={props.headerStyle} title={friend.friendNickname} subtitle="Overview" />,
+            headerTitle: (props) => <HeaderTitle {...props} title={friend.friendNickname} subtitle="Overview" />,
             headerRight: () => <NewGameButton />,
         })
     }, [])

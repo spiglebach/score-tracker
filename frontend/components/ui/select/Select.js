@@ -5,6 +5,7 @@ import { FontAwesome6 } from "@expo/vector-icons"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import Button from "../Button"
 import SelectRow from "./SelectRow"
+import { GlobalStyles } from "../../../constants/styles"
 
 function Select({value, selectorTitle, displayLabel, placeholder, mainData, mainColumns, secondaryData, secondaryColumns, keyExtractor, labelExtractor, onChange, gap}) {
     let controlled = !!value
@@ -24,7 +25,6 @@ function Select({value, selectorTitle, displayLabel, placeholder, mainData, main
     if (!controlled) {
         onChange = (item) => {
             setUncontrolledValue(item)
-            handleClose()
         }
     }
 
@@ -117,7 +117,7 @@ function Select({value, selectorTitle, displayLabel, placeholder, mainData, main
                             {effectiveValue && effectiveValue.icon && <FontAwesome6 name={effectiveValue.icon} size={20}/>}
                             <Text style={[styles.valueDisplayText, !effectiveValue && styles.placeholder]}>{effectiveValue ? labelExtractor(effectiveValue) : placeholder}</Text>
                         </View>
-                        <FontAwesome6 name="hand-pointer" size={18} />
+                        <FontAwesome6 name="hand-pointer" size={18} color={GlobalStyles.colors.tertiaryContainerText} />
                     </Pressable>
                 </View>
             </View>
@@ -156,14 +156,15 @@ const styles = StyleSheet.create({
     selectorContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: GlobalStyles.colors.surface500
     },
     selectorTitle: {
         fontSize: 20,
         fontWeight: 'bold'
     },
     placeholder: {
-        color: 'gray'
+        opacity: 0.7
     }
 })
 

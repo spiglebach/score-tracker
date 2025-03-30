@@ -4,7 +4,7 @@ import RecentGameButton from "./RecentGameButton"
 
 function RecentGamesInput({games, onRecentGamePress}) {
     return (
-        <View style={inputStyles.container}>
+        <View style={[inputStyles.container, styles.containerOverride]}>
             <Text style={[inputStyles.label, styles.recentGamesLabel]}>Recent games:</Text>
             <ScrollView horizontal >
                 <View style={styles.recentButtonsContainer}>
@@ -16,6 +16,9 @@ function RecentGamesInput({games, onRecentGamePress}) {
 }
 
 const styles = StyleSheet.create({
+    containerOverride: {
+        marginTop: 0
+    },
     recentButtonsContainer: {
         marginVertical: 4,
         marginHorizontal: 8,

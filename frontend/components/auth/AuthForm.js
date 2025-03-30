@@ -91,9 +91,6 @@ function AuthForm({isLogin, onSubmit, credentialsInvalid}) {
 const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 14
-    },
-    label: {
-        color: 'white'
     }
 })
 

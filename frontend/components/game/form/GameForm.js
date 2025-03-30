@@ -39,15 +39,15 @@ const styles = StyleSheet.create({
         flex: 1
     },
     buttonContainer: {
+        marginTop: 14,
         flexDirection: 'row',
         justifyContent: 'center',
-        gap: 20,
         marginBottom: 40,
+        gap: 2
     },
     button: {
         flex: 1,
-        marginTop: 24,
-        marginHorizontal: 4
+        marginHorizontal: 2
     }
 })
 

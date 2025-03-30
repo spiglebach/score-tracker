@@ -1,20 +1,40 @@
 import { Pressable, StyleSheet, Text } from "react-native"
 import {FontAwesome6} from "@expo/vector-icons"
+import { GlobalStyles } from "../../../constants/styles"
 
 function SelectRowItem({item, labelExtractor, onChange, secondary}) {
     const displayValue = labelExtractor(item)
+    const isSelected = item.isSelected
 
     function handleRowItemPressed() {
         onChange(item)
     }
 
+    let backgroundColor
+    let textColor
+    if (isSelected) {
+        backgroundColor = GlobalStyles.colors.tertiary
+        textColor = GlobalStyles.colors.tertiaryText
+    } else {
+        backgroundColor = GlobalStyles.colors.tertiaryContainer
+        textColor = GlobalStyles.colors.tertiaryContainerText
+    }
+
+    const containerStyles = {
+        backgroundColor: backgroundColor
+    }
+
+    const textStyles = {
+        color: textColor
+    }
+
     return (
         <Pressable
-                style={[styles.rowItem, item.isSelected && styles.selectedItem]}
+                style={[styles.rowItem, containerStyles]}
                 onPress={handleRowItemPressed}
         >
-            <FontAwesome6 name={item.icon} size={30} />
-            <Text style={[styles.rowItemText, secondary && styles.secondaryRowItemText]}>{displayValue}</Text>
+            <FontAwesome6 name={item.icon} size={30} color={textColor} />
+            <Text style={[styles.rowItemText, secondary && styles.secondaryRowItemText, textStyles]}>{displayValue}</Text>
         </Pressable>
     )
 }
@@ -22,12 +42,11 @@ function SelectRowItem({item, labelExtractor, onChange, secondary}) {
 const styles = StyleSheet.create({
     rowItem: {
         flex: 1,
-        backgroundColor: 'wheat',
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 2,
-        borderColor: 'green',
+        borderColor: GlobalStyles.colors.outline,
         borderRadius: 14,
         gap: 8
     },
@@ -38,9 +57,6 @@ const styles = StyleSheet.create({
     },
     secondaryRowItemText: {
         fontSize: 14,
-    },
-    selectedItem: {
-        backgroundColor: 'gold'
     },
 })
 

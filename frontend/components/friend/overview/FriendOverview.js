@@ -19,7 +19,7 @@ function FriendOverview({games, friend}) {
                 <CountDisplay title="Total games" count={games.length} style={styles.totalGameCountStyle} />
             </View>
             <View>
-                <Button onPress={logout}>Logout</Button>
+                <Button color="error" onPress={logout}>Logout</Button>
             </View>
         </View>
     )

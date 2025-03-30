@@ -3,6 +3,7 @@ import AuthForm from "./AuthForm"
 import Button from "../ui/Button"
 import { useNavigation } from "@react-navigation/native"
 import { useState } from "react"
+import { GlobalStyles } from "../../constants/styles"
 
 function AuthContent({isLogin, onAuthenticate}) {
     const navigation = useNavigation()
@@ -45,8 +46,7 @@ function AuthContent({isLogin, onAuthenticate}) {
             <View style={styles.switchButtonContainer}>
                 <Button
                     onPress={switchAuthModeHandler}
-                    mode="flat"
-                    textStyle={styles.switchButtonText}>
+                    mode="flat">
                     {isLogin ? 'Go to Registration' : 'Go to Login'}
                 </Button>
             </View>
@@ -57,7 +57,7 @@ function AuthContent({isLogin, onAuthenticate}) {
 const styles = StyleSheet.create({
     authContainer: {
         padding: 14,
-        backgroundColor: 'slateblue',
+        backgroundColor: GlobalStyles.colors.surface500,
         marginHorizontal: 20,
         borderRadius: 14,
         borderTopLeftRadius: 0,
@@ -65,9 +65,6 @@ const styles = StyleSheet.create({
     },
     switchButtonContainer: {
         marginTop: 18
-    },
-    switchButtonText: {
-        color: 'white'
     }
 })
 

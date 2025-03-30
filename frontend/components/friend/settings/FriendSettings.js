@@ -1,12 +1,15 @@
 import { Modal, SafeAreaView, StyleSheet, View } from "react-native";
 import Input from "../../ui/Input";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Button from "../../ui/Button";
 import ColorPreview from "../../ui/ColorPreview";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ColorCombinationSelector from "./ColorCombinationSelector";
+import { useNavigation } from "@react-navigation/native";
+import { GlobalStyles } from "../../../constants/styles";
 
 function FriendSettings({friend}) {
+    const navigation = useNavigation()
     const initialFriendNickname = friend.friendNickname
     const initialFriendBackgroundColor = friend.friendBackgroundColor
     const initialFriendTextColor = friend.friendForegroundColor
@@ -20,6 +23,23 @@ function FriendSettings({friend}) {
         backgroundColor: false,
         textColor: false
     })
+
+    const editButton = (
+        <Button
+                textStyle={styles.editButtonText}
+                color="warn"
+                style={{width: 70}}
+                onPress={() => setIsEditMode(true)}
+            >
+                Edit
+        </Button>
+    )
+    
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => !isEditMode && editButton,
+        })
+    }, [isEditMode])
 
     
     const [selectedFriendNickname, setSelectedFriendNickname] = useState(initialFriendNickname)
@@ -86,19 +106,7 @@ function FriendSettings({friend}) {
         manageFriendButtons = (
             <>
             <Button style={styles.button} mode="flat" onPress={handleCancelEditing}>Cancel</Button>
-            <Button style={styles.button} onPress={handleSubmit}>Update</Button>
-            </>
-        )
-    } else {
-        manageFriendButtons = (
-            <>
-            <Button
-                style={[styles.button, styles.editButton]}
-                textStyle={styles.editButtonText}
-                onPress={() => setIsEditMode(true)}
-            >
-                Edit
-            </Button>
+            <Button style={styles.button} color="warn" onPress={handleSubmit}>Update</Button>
             </>
         )
     }
@@ -106,7 +114,7 @@ function FriendSettings({friend}) {
     return (
         <View style={styles.container}>
             <Input
-                label="Friend Nickname"
+                label="Friend nickname"
                 // labelStyle={styles.label}
                 invalid={friendNicknameInvalid}
                 changed={inputValuesChanged.nickname}
@@ -120,7 +128,7 @@ function FriendSettings({friend}) {
             <View>
                 <Modal visible={isEditMode && isModalVisible} animationType="slide">
                     <SafeAreaProvider>
-                    <SafeAreaView>
+                    <SafeAreaView style={styles.modal}>
                         <View style={styles.modalContainer}>
                             <ColorCombinationSelector
                                 previewText={selectedFriendNickname}
@@ -167,11 +175,9 @@ const styles = StyleSheet.create({
     button: {
         flex: 1
     },
-    editButton: {
-        backgroundColor: 'khaki'
-    },
-    editButtonText: {
-        color: 'black'
+    modal: {
+        flex: 1,
+        backgroundColor: GlobalStyles.colors.surface500
     },
     modalContainer: {
         marginVertical: 50

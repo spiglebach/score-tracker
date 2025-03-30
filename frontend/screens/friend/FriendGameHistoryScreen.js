@@ -17,7 +17,7 @@ function FriendGameHistoryScreen({navigation}) {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: (props) => <HeaderTitle style={props.headerStyle} title={friend.friendNickname} subtitle="Game History" />,
+            headerTitle: (props) => <HeaderTitle {...props} title={friend.friendNickname} subtitle="Game History" />,
             headerRight: () => <NewGameButton />
         })
     }, [])

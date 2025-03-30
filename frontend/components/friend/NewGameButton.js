@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native"
 import Button from "../ui/Button"
-import { StyleSheet } from "react-native"
 
 function NewGameButton() {
     const navigation = useNavigation()
@@ -10,14 +9,8 @@ function NewGameButton() {
     }
 
     return (
-        <Button style={styles.button} onPress={navigateToNewGameScreen}>New Game</Button>
+        <Button mode="flat" color="secondary" onPress={navigateToNewGameScreen}>New Game</Button>
     )
 }
-
-const styles = StyleSheet.create({
-    button: {
-        marginRight: 14
-    }
-})
 
 export default NewGameButton
