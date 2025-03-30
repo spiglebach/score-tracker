@@ -14,6 +14,7 @@ import AuthContextProvider, { AuthContext, AxiosAuthRefreshInterceptor, getToken
 import { useContext, useEffect, useState } from 'react'
 import LoadingOverlay from './components/ui/LoadingOverlay'
 import { GlobalStyles } from './constants/styles'
+import FriendStatisticsScreen from './screens/friend/FriendStatisticsScreen'
 
 const Stack = createNativeStackNavigator()
 const BottomTab = createBottomTabNavigator()
@@ -59,6 +60,11 @@ function FriendNaviagationStack() {
                 options={{
                     tabBarLabel: 'Game History',
                     tabBarIcon: ({color, size}) => <Octicons name='history' size={size} color={color} />
+                }}/>
+            <BottomTab.Screen name="FriendStatistics" component={FriendStatisticsScreen}
+                options={{
+                    tabBarLabel: 'Statistics',
+                    tabBarIcon: ({color, size}) => <Octicons name='graph' size={size} color={color} />
                 }}/>
             <BottomTab.Screen name="FriendSettings" component={FriendSettingsScreen}
                 options={{

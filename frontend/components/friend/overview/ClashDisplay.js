@@ -33,17 +33,13 @@ function ClashDisplay({games, friend}) {
 
     return (
         <View style={styles.container}>
-            <View style={[styles.playerContainer, ownerContainerStyles]}>
-                <Text style={[styles.playerNameText, styles.ownerNameText, ownerTextStyles]}>{ownerName}</Text>
-                <View style={[styles.playerClash, styles.onwerClash, ownerScoreStyles]}>
-                    <Text numberOfLines={1} style={[styles.playerScoreText, ownerTextStyles]}>{ownerScore}</Text>
-                </View>
+            <View style={[styles.playerClash, styles.ownerClash, ownerScoreStyles, ownerContainerStyles]}>
+                <Text style={[styles.playerNameText, ownerTextStyles]}>{ownerName}</Text>
+                <Text numberOfLines={1} style={[styles.playerScoreText, ownerTextStyles]}>{ownerScore}</Text>
             </View>
-            <View style={[styles.playerContainer, friendContainerStyles]}>
-                <Text style={[styles.playerNameText, styles.friendNameText, friendTextStyles]}>{friendName}</Text>
-                <View style={[styles.playerClash, styles.friendClash, friendScoreStyles]}>
-                    <Text style={[styles.playerScoreText, friendTextStyles]}>{friendScore}</Text>
-                </View>
+            <View style={[styles.playerClash, styles.friendClash, friendScoreStyles, friendContainerStyles]}>
+                <Text style={[styles.playerNameText, friendTextStyles]}>{friendName}</Text>
+                <Text style={[styles.playerScoreText, friendTextStyles]}>{friendScore}</Text>
             </View>
         </View>
     )
@@ -51,23 +47,12 @@ function ClashDisplay({games, friend}) {
 
 const styles = StyleSheet.create({
     container: {
-        gap: 0,
-        flexDirection: 'row'
-    },
-    playerContainer: {
         flex: 1,
-        minWidth: 50,
-    },
-    ownerNameText: {
-        textAlign: 'left',
-        marginLeft: 20,
-    },
-    friendNameText: {
-        textAlign: 'right',
-        marginRight: 20
+        gap: 10
     },
     playerNameText: {
         fontSize: 24,
+        textAlign: 'center',
         fontWeight: 'bold'
     },
     playerClash: {
@@ -75,17 +60,19 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: 200,
+        minHeight: 30,
     },
-    onwerClash: {
+    ownerClash: {
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
-        borderRightWidth: 0
+        borderRightWidth: 0,
+        marginLeft: 20
     },
     friendClash: {
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
-        borderLeftWidth: 0
+        borderLeftWidth: 0,
+        marginRight: 20
     },
     playerScoreText: {
         fontSize: 44,

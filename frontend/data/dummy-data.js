@@ -4,7 +4,7 @@ import Game, { GameScore } from "../model/Game";
 export const OWNER = {
     id: 1,
     name: "Gé Marcell",
-    preferredNickname: "Garci",
+    preferredNickname: "Parci",
     preferredBackgroundColor: "rgb(119, 211, 248)",
     preferredForegroundColor: "rgb(53, 0, 177)",
 }
